@@ -2,6 +2,10 @@
 
 A collection of lightweight, pure Python security automation and telemetry tools designed to run natively in mobile environments like Termux without external dependencies. Built to support incident response, threat intelligence analysis, network monitoring, and system auditing.
 
+## Command Center Dashboard
+
+The toolkit includes a centralized command-line dashboard (`soc_dashboard.py`) that provides an interactive menu interface to launch individual modules or execute a full automated system audit.
+
 ## Included Tools
 
 1. **Incident Triage & Alert Escalation (`incident_triage.py`)**
@@ -30,9 +34,9 @@ A collection of lightweight, pure Python security automation and telemetry tools
 
 ## Usage
 
-Clone the repository and run any tool directly using Python 3:
+Clone the repository and launch the interactive SOC dashboard:
 
 ```bash
 git clone [https://github.com/iankapida/Security_tools.git](https://github.com/iankapida/Security_tools.git)
 cd Security_tools
-python3 incident_triage.py
+python3 soc_dashboard.py
