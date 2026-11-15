@@ -35,3 +35,4 @@ if __name__ == "__main__":
     log_file = sys.argv[1] if len(sys.argv) > 1 else "sample_auth.log"
     parse_auth_log(log_file)
 # Tampered comment
+# Unauthorized modification

@@ -4,6 +4,12 @@ import json
 import os
 import sys
 
+# Import our notification module safely
+try:
+    from notifier import send_alert
+except ImportError:
+    send_alert = None
+
 HASH_STORE = "baseline.json"
 
 def calculate_sha256(file_path):
@@ -30,7 +36,7 @@ def create_baseline(file_paths):
         json.dump(baseline, f, indent=4)
     print(f"[+] Baseline saved to {HASH_STORE}")
 
-def check_integrity():
+def check_integrity(webhook_url=None):
     if not os.path.exists(HASH_STORE):
         print(f"[-] No baseline file found ({HASH_STORE}). Create one first.")
         return
@@ -40,18 +46,34 @@ def check_integrity():
 
     print("\n[+] Checking File Integrity...")
     print("-" * 50)
+    
+    alerts_triggered = []
+    
     for path, old_hash in baseline.items():
         current_hash = calculate_sha256(path)
         if current_hash is None:
-            print(f"[!] WARNING: File missing -> {path}")
+            msg = f"WARNING: File missing -> {path}"
+            print(f"[!] {msg}")
+            alerts_triggered.append(msg)
         elif current_hash != old_hash:
-            print(f"[!] ALERT: File modified/tampered -> {path}")
+            msg = f"ALERT: File modified/tampered -> {path}"
+            print(f"[!] {msg}")
+            alerts_triggered.append(msg)
         else:
             print(f"[OK] Unchanged -> {path}")
+            
     print("-" * 50)
+
+    # Automatically dispatch webhook alerts if tampering is found
+    if alerts_triggered and webhook_url and send_alert:
+        print("[+] Tampering detected! Dispatching automated webhook alerts...")
+        for alert_msg in alerts_triggered:
+            send_alert(alert_msg, webhook_url)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "init":
         create_baseline(sys.argv[2:])
     else:
-        check_integrity()
+        # Pass webhook URL as an optional argument during check
+        webhook = sys.argv[1] if len(sys.argv) > 1 else None
+        check_integrity(webhook)
