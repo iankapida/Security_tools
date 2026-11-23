@@ -1,0 +1,23 @@
+=== Target-Supplied Verification (Mon Nov 23 09:10:26 CAT 2026) ===
+Enter target IP or hostname: ============================================================
+      ACTIVE ENUMERATION & BANNER GRABBER: 127.0.0.1
+============================================================
+[-] Port 21: Closed
+[-] Port 22: Closed
+[-] Port 25: Closed
+[-] Port 80: Closed
+[-] Port 443: Closed
+[-] Port 3306: Closed
+active_enum exit: 0
+Enter target domain (e.g., example.com): ============================================================
+      PASSIVE RECONNAISSANCE MODULE: 127.0.0.1
+============================================================
+
+[*] Querying Core DNS Records for: 127.0.0.1
+--------------------------------------------------
+[+] A Record (IPv4): 127.0.0.1
+
+[*] Inspecting HTTP Response Headers for: 127.0.0.1
+--------------------------------------------------
+[-] HTTP Inspection Failed: <urlopen error [Errno 111] Connection refused>
+recon_intel exit: 0
