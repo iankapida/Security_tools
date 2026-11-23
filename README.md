@@ -1,61 +1,27 @@
-<<<<<<< HEAD
-# SOC Operator CLI Console
+# Security_tools
 
-A modular command-line security operations dashboard built in Python for mobile/PRoot Linux environments.
+Security monitoring, reconnaissance, enumeration, log/packet analysis, vulnerability assessment, and reporting scripts built and run in Termux.
 
-## Features
-- **Real-Time Telemetry View:** Displays active engine status and unacknowledged threat alert queues using `rich`.
-- **Threat Alert Log Viewer:** Color-coded severity triage for simulated network events.
-- **Automated Nmap Audit Module:** Wraps Nmap (`-sT -Pn`) for non-root container environments with Fast Sweep and Service/Version (`-sV`) detection profiles, plus automated report exporting.
+## Scripts in This Repository
 
-## Setup & Usage
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python3 soc_dashboard.py
+- `active_enum.py` — Active host and service enumeration
+- `aggregator.py` — Data and security event aggregation
+- `exploit_simulator.py` — Controlled exploit simulation utility
+- `fim_monitor.py` — File integrity monitoring
+- `incident_triage.py` — Security incident triage workflow
+- `ioc_extractor.py` — Indicator of Compromise (IoC) extraction
+- `log_aggregator.py` — Log collection and aggregation
+- `packet_analyzer.py` — Network packet inspection
+- `port_scanner.py` — TCP port scanning
+- `post_exploit.py` — Post-exploitation checks and analysis
+- `recon_intel.py` — Reconnaissance intelligence gathering
+- `report_generator.py` — Security report generation
+- `soc_dashboard.py` — Terminal SOC status view
+- `subdomain_enum.py` — Subdomain enumeration
+- `vuln_analyzer.py` — Vulnerability analysis
+- `yara_evaluator.py` — YARA rule evaluation
 
-=======
-# Security Automation Toolkit
-
-A collection of lightweight, pure Python security automation and telemetry tools designed to run natively in mobile environments like Termux without external dependencies. Built to support incident response, threat intelligence analysis, network monitoring, and system auditing.
-
-## Command Center Dashboard
-
-The toolkit includes a centralized command-line dashboard (`soc_dashboard.py`) that provides an interactive menu interface to launch individual modules or execute a full automated system audit.
-
-## Included Tools
-
-1. **Incident Triage & Alert Escalation (`incident_triage.py`)**
-   - Parses authentication logs, detects brute-force patterns within a sliding time window, and flags high-severity IPs for automated escalation.
-
-2. **Threat Intel Scraper & IOC Extractor (`ioc_extractor.py`)**
-   - Extracts Indicators of Compromise (IOCs)—including IPv4 addresses, domains, and SHA-256 hashes—from unstructured threat reports.
-
-3. **Subdomain & Active DNS Enumerator (`subdomain_enum.py`)**
-   - Performs rapid DNS resolution lookups against common wordlists to discover active subdomains.
-
-4. **YARA-Style File Signature Evaluator (`yara_evaluator.py`)**
-   - Scans files for suspicious code patterns, function calls, and potential backdoor signatures.
-
-5. **Packet Analyzer & Protocol Inspector (`packet_analyzer.py`)**
-   - Inspects simulated firewall and packet flow logs to flag unauthorized ports and protocol anomalies.
-
-6. **File Integrity Monitor - FIM (`fim_monitor.py`)**
-   - Computes and tracks SHA-256 cryptographic file hashes to detect unauthorized modifications or tampering.
-
-7. **Multi-Threaded TCP Port Scanner (`port_scanner.py`)**
-   - Scans target IP addresses across specified ports using concurrent threads for rapid service discovery and banner grabbing.
-
-8. **Centralized Log Aggregator & Parser (`log_aggregator.py`)**
-   - Normalizes multi-source logs (auth, web, firewall) into a unified JSON telemetry feed with automated severity scoring.
-
-## Usage
-
-Clone the repository and launch the interactive SOC dashboard:
+## Syntax & Quick Check
 
 ```bash
-git clone [https://github.com/iankapida/Security_tools.git](https://github.com/iankapida/Security_tools.git)
-cd Security_tools
-python3 soc_dashboard.py
->>>>>>> 285ed65d52e6af15c9c8d900ac8255624baee82d
+python3 -m py_compile *.py
