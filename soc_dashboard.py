@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import subprocess
 from datetime import datetime
 from rich.console import Console
@@ -105,7 +104,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-=======
 #!/usr/bin/env python3
 import os
 import sys
@@ -185,4 +183,3 @@ def run_all(tools):
 
 if __name__ == '__main__':
     main_menu()
->>>>>>> 285ed65d52e6af15c9c8d900ac8255624baee82d
